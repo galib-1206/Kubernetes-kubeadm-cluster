@@ -14,7 +14,7 @@ Typically isolates VMs from each other unless complex port forwarding rules are 
 _**Bridge Adapter**_:
 Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!!
 
-![Bridge Networking](E:\Projects\Kubernetes\kubeadm-cluster-\kubeadm_pics\image1.png)
+![Bridge Networking] (kubeadm_pics\image1.png)
 
 Details: https://www.nakivo.com/blog/virtualbox-network-setting-guide/
 
