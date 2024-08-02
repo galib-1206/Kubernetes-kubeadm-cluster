@@ -161,7 +161,7 @@ Check the status of nodes:
 kubectl get nodes
 ```
 
-![image2!](kubeadm_pics/image2.png)
+![image2!](../kubeadm_pics/image2.png)
 
 
 7. ##### **Error solving:**
@@ -179,7 +179,7 @@ sudo docker ps -a | grep kube-apiserver
 
 -**Waiting for the kubelet to perform the TLS Bootstrap**
 
-![image3!](kubeadm_pics/image3.png)
+![image3!](../kubeadm_pics/image3.png)
 
 ##### _**If join nodes to cluster is not working!!!**_
 Follow these steps : 
@@ -266,6 +266,6 @@ If any error then give permission:
 kubeadm  join with --skip-phases=preflight
 ```
 
-![image4!](kubeadm_pics/image4.png)
+![image4!](../kubeadm_pics/image4.png)
 
 Here, VM1 is master node & VM2,VM3 are worker nodes.
