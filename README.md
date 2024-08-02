@@ -4,32 +4,34 @@
 **Direct VM-to-VM Communication**
 In a Host-Only network, VMs can communicate directly with each other without any intermediate translation or routing. This direct communication is crucial for Kubernetes clusters, where the master node needs to communicate with worker nodes reliably.
 
-**Host-Only Network:** 
+_**Host-Only Network:**_ 
 Direct IP communication between VMs. Only host adapter , Host network will not be accessed!!
 
-**NAT Network:** 
+_**NAT Network:**_ 
 Typically isolates VMs from each other unless complex port forwarding rules are set up. (By using NAT network , Host network will be accessed , but For the outside world , all worker node’s ip will be same! In this case Kubeadm will not be working)
 
-**Bridge Adapter:** 
+_**Bridge Adapter:**_
 Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!! 
 
-_Details:_ https://www.nakivo.com/blog/virtualbox-network-setting-guide/
+Details: https://www.nakivo.com/blog/virtualbox-network-setting-guide/
 
 ### VM Setup
 
 ##### Installation :
- 
+
 1. ##### **Set Up Virtual Machines**
 Create multiple VMs that will serve as your Kubernetes master and nodes.
 
 **#Open VirtualBox/VMware:**
--Create a new VM for each node.
--Allocate resources (CPU, RAM, disk space) according to your needs.
--A minimal setup could be 2 -CPUs, 2GB RAM, and 20GB disk space per VM.
--Choose a Linux distribution (Ubuntu is commonly used) and install it on each VM.
+
+- Create a new VM for each node.
+- Allocate resources (CPU, RAM, disk space) according to your needs.
+- A minimal setup could be 2 -CPUs, 2GB RAM, and 20GB disk space per VM.
+- Choose a Linux distribution (Ubuntu is commonly used) and install it on each VM.
 
 **#Configure Network:**
 Ensure all VMs are in the same network (Bridge Adapter)
+
 2. ##### **Install Kubernetes Dependencies**
 
 On each VM, 
@@ -80,6 +82,7 @@ sudo systemctl enable --now kubelet
 ```
 
  3. ##### **Initialize Kubernetes Master**
+
 On the master VM:
 
 3.1. **Initialize the master node**
@@ -120,12 +123,14 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 
 4. ##### **Install a Pod network plugin or add-on (e.g., Calico):**
+
 ```sh
 kubectl apply -f https://calico-v3-25.netlify.app/archive/v3.25/manifests/calico.yaml
 ```
 
 
 5. ##### **Join Nodes to the Cluster**
+
 On each node VM:
 Use the join command provided by the kubeadm init output on the master VM:
 ```sh
@@ -146,6 +151,7 @@ kubeadm token create --print-join-command
 
 
 6. ##### **Verify the Cluster**
+
 On the master VM:
 Check the status of nodes:
 ```sh
@@ -154,6 +160,7 @@ kubectl get nodes
 
 
 7. ##### **Error solving:**
+
 ```sh
 sudo kubeadm reset
 sudo rm -rf /etc/kubernetes/manifests/*.yaml
@@ -164,6 +171,7 @@ sudo rm -rf /etc/kubernetes/manifests/*.yaml
 ls /etc/kubernetes/manifests/
 sudo docker ps -a | grep kube-apiserver
 ```
+
 -**Waiting for the kubelet to perform the TLS Bootstrap**
 
 ##### _**If join nodes to cluster is not working!!!**_
@@ -172,11 +180,13 @@ Follow these steps :
 _(**Worker Node**)_
 
 1. Create a 20-etcd-service-manager.conf  file inside /etc/systemd/system/kubelet.service.d
+
 ```sh
 [Service]
 Environment="ETCD_NAME=$(hostname)"
 ```
 2. Create a  10-kubeadm.conf file inside /etc/systemd/system/kubelet.service.d
+
 ```sh
 [Unit]
 
@@ -212,6 +222,7 @@ Environment="KUBELET_EXTRA_ARGS=--node-ip=172.16.105.248 --pod-infra-container-i
 WantedBy=multi-user.target
 ```
 3. At first **comment out** the line in 10-kubeadm.conf : 
+
 ```sh
 ExecStart=
 ExecStart=/usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --cgroup-driver=cgroupfs
@@ -220,13 +231,16 @@ ExecStart=/usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kube
  ```sh
  systemctl daemon-reload
 ```
-4. Now run kubeadm join until the TLS Bootstrap log comes. When it comes then stop it. This way all your configuration files will be created.
-4. Now comment out that line and again execute:
+4. Now run kubeadm join (token) until the TLS Bootstrap log comes. When it comes then stop it. This way all your configuration files will be created.
+
+5. Now comment out that line and again execute:
+
 ```sh
 systemctl daemon-reload
 sudo systemctl stop kubelet
 ```
 6. Now execute command 
+
 ```sh
 	systemctl daemon-reload
 	sudo systemctl restart kubelet
@@ -239,7 +253,8 @@ If any error then give permission:
 	sudo systemctl restart docker
 	sudo systemctl restart kubelet
 ```
-7. Now run 
+7. Now run
+
 ```sh 
 kubeadm  join with --skip-phases=preflight
 ```
