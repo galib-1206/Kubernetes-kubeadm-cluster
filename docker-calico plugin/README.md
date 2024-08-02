@@ -1,4 +1,4 @@
-### Kubeadm Cluster: 
+### Kubeadm Cluster with Docker & Calico plugin 
 
 (VM Networking)
 
