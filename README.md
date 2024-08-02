@@ -14,7 +14,7 @@ Typically isolates VMs from each other unless complex port forwarding rules are 
 _**Bridge Adapter**_:
 Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!!
 
-![Bridge Networking!](kubeadm_pics/image1.png)
+![image1!](kubeadm_pics/image1.png)
 
 Details: https://www.nakivo.com/blog/virtualbox-network-setting-guide/
 
@@ -161,6 +161,8 @@ Check the status of nodes:
 kubectl get nodes
 ```
 
+![image2!](kubeadm_pics/image2.png)
+
 
 7. ##### **Error solving:**
 
@@ -176,6 +178,8 @@ sudo docker ps -a | grep kube-apiserver
 ```
 
 -**Waiting for the kubelet to perform the TLS Bootstrap**
+
+![image3!](kubeadm_pics/image3.png)
 
 ##### _**If join nodes to cluster is not working!!!**_
 Follow these steps : 
@@ -262,5 +266,6 @@ If any error then give permission:
 kubeadm  join with --skip-phases=preflight
 ```
 
+![image4!](kubeadm_pics/image4.png)
 
 
