@@ -12,7 +12,9 @@ _**NAT Network**_:
 Typically isolates VMs from each other unless complex port forwarding rules are set up. (By using NAT network , Host network will be accessed , but For the outside world , all worker node’s ip will be same! In this case Kubeadm will not be working)
 
 _**Bridge Adapter**_:
-Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!! 
+Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!!
+
+![Bridge Networking](E:\Projects\Kubernetes\kubeadm-cluster-\kubeadm_pics\image1.png)
 
 Details: https://www.nakivo.com/blog/virtualbox-network-setting-guide/
 
