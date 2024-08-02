@@ -268,4 +268,4 @@ kubeadm  join with --skip-phases=preflight
 
 ![image4!](kubeadm_pics/image4.png)
 
-
+Here, VM1 is master node & VM2,VM3 are worker nodes.
