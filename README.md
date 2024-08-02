@@ -4,16 +4,21 @@
 **Direct VM-to-VM Communication**
 In a Host-Only network, VMs can communicate directly with each other without any intermediate translation or routing. This direct communication is crucial for Kubernetes clusters, where the master node needs to communicate with worker nodes reliably.
 
--**Host-Only Network:** Direct IP communication between VMs. Only host adapter , Host network will not be accessed!!
+**Host-Only Network:** 
+Direct IP communication between VMs. Only host adapter , Host network will not be accessed!!
 
--**NAT Network:** Typically isolates VMs from each other unless complex port forwarding rules are set up. (By using NAT network , Host network will be accessed , but For the outside world , all worker node’s ip will be same! In this case Kubeadm will not be working)
+**NAT Network:** 
+Typically isolates VMs from each other unless complex port forwarding rules are set up. (By using NAT network , Host network will be accessed , but For the outside world , all worker node’s ip will be same! In this case Kubeadm will not be working)
 
--**Bridge Adapter:** Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!! 
+**Bridge Adapter:** 
+Without Bridge Adapter Kubernetes api server will not be found. So, just use Bridge!!! 
 
 _Details:_ https://www.nakivo.com/blog/virtualbox-network-setting-guide/
 
 ### VM Setup
-##### Installation : 
+
+##### Installation :
+ 
 1. ##### **Set Up Virtual Machines**
 Create multiple VMs that will serve as your Kubernetes master and nodes.
 
